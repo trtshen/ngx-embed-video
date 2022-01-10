@@ -38,18 +38,14 @@
     "url": "https://github.com/SamirHodzic/ngx-embed-video/issues"
   },
   "main": "./dist/index.js",
-  "peerDependencies": {
-    "@angular/common": "^12.0.0",
-    "@angular/core": "^12.0.0"
-  },
   "devDependencies": {
-    "@angular/common": "^13.1.1",
-    "@angular/compiler": "^13.1.1",
-    "@angular/compiler-cli": "^13.1.1",
-    "@angular/core": "^13.1.1",
-    "@angular/platform-browser": "^13.1.1",
-    "@angular/platform-browser-dynamic": "^13.1.1",
-    "@angular/platform-server": "^13.1.1",
+    "@angular/common": "^12.0.0",
+    "@angular/compiler": "^12.0.0",
+    "@angular/compiler-cli": "^12.0.0",
+    "@angular/core": "^12.0.0",
+    "@angular/platform-browser": "^12.0.0",
+    "@angular/platform-browser-dynamic": "^12.0.0",
+    "@angular/platform-server": "^12.0.0",
     "@types/jasmine": "^3.10.3",
     "codelyzer": "^6.0.2",
     "core-js": "^3.20.2",
@@ -65,7 +61,7 @@
     "ts-helpers": "^1.1.2",
     "ts-loader": "^9.2.6",
     "tslint": "^5.20.1",
-    "typescript": "^4.5.4",
+    "typescript": "^4.2.3",
     "webpack": "~5.0.0",
     "zone.js": "~0.11.4"
   },
