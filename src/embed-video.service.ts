@@ -3,6 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 import { map } from 'rxjs/operators';
 
+interface EmbedOption {
+  query ?: string[];
+  attr ?: {
+    [key: string]: string;
+  }
+}
+
 @Injectable()
 export class EmbedVideoService {
   private validYouTubeOptions = [
@@ -34,10 +41,9 @@ export class EmbedVideoService {
   ) {
   }
 
-  public embed(url: any, options?: any): any {
-    let id;
+  public embed(url: any, options?: any): string {
+    let id: string;
     url = new URL(url);
-
     id = this.detectYoutube(url);
     if (id) {
       return this.embed_youtube(id, options);
@@ -52,9 +58,11 @@ export class EmbedVideoService {
     if (id) {
       return this.embed_dailymotion(id, options);
     }
+
+    return null;
   }
 
-  public embed_youtube(id: string, options?: any): string {
+  public embed_youtube(id: string, options?: EmbedOption): string {
     options = this.parseOptions(options);
 
     return this.sanitize_iframe('<iframe src="https://www.youtube.com/embed/'
@@ -62,7 +70,7 @@ export class EmbedVideoService {
       + ' frameborder="0" allowfullscreen></iframe>');
   }
 
-  public embed_vimeo(id: string, options?: any): string {
+  public embed_vimeo(id: string, options?: EmbedOption): string {
     options = this.parseOptions(options);
 
     return this.sanitize_iframe('<iframe src="https://player.vimeo.com/video/'
@@ -70,7 +78,7 @@ export class EmbedVideoService {
       + ' frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>');
   }
 
-  public embed_dailymotion(id: string, options?: any): string {
+  public embed_dailymotion(id: string, options?: EmbedOption): string {
     options = this.parseOptions(options);
 
     return this.sanitize_iframe('<iframe src="https://www.dailymotion.com/embed/video/'
@@ -78,11 +86,10 @@ export class EmbedVideoService {
       + ' frameborder="0" allowfullscreen></iframe>');
   }
 
-  public embed_image(url: any, options?: any): any {
-    let id;
+  public embed_image(url: any, options?: EmbedOption): any {
+    let id: string;
 
     url = new URL(url);
-
     id = this.detectYoutube(url);
     if (id) {
       return this.embed_youtube_image(id, options);
@@ -128,12 +135,14 @@ export class EmbedVideoService {
 
     options.image = this.validVimeoOptions.indexOf(options.image) >= 0 ? options.image : 'thumbnail_large';
 
-    return this.http.get('https://vimeo.com/api/v2/video/' + id + '.json').pipe(map((res: any) => {
-      return {
-        'link': res[0][options.image],
-        'html': '<img src="' + res[0][options.image] + '"/>'
-      };
-    }))
+    return this.http.get('https://vimeo.com/api/v2/video/' + id + '.json').pipe(
+      map((res: any) => {
+        return {
+          'link': res[0][options.image],
+          'html': '<img src="' + res[0][options.image] + '"/>'
+        };
+      })
+    )
       .toPromise()
       .catch(error => console.log(error));
   }
@@ -158,7 +167,7 @@ export class EmbedVideoService {
       .catch(error => console.log(error));
   }
 
-  private parseOptions(options: any): any {
+  private parseOptions(options: EmbedOption): any {
     let queryString = '',
       attributes = '';
 

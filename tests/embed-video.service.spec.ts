@@ -1,4 +1,4 @@
-import { async, inject, TestBed } from '@angular/core/testing';
+import { waitForAsync, inject, TestBed } from '@angular/core/testing';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { EmbedVideoService } from '../src/embed-video.service';
@@ -135,7 +135,7 @@ describe('EmbedVideoService', () => {
     }));
 
   it('gets vimeo thumbnail',
-    async(inject([EmbedVideoService], (embedVideoService) => {
+    waitForAsync(inject([EmbedVideoService], (embedVideoService) => {
 
       embedVideoService.embed_image('https://vimeo.com/19339941').then((image) => {
         expect(image.link).toEqual('https://i.vimeocdn.com/video/122513613_640.jpg');
@@ -144,7 +144,7 @@ describe('EmbedVideoService', () => {
     })));
 
   it('gets vimeo thumbnail with options',
-    async(inject([EmbedVideoService], (embedVideoService) => {
+    waitForAsync(inject([EmbedVideoService], (embedVideoService) => {
 
       embedVideoService.embed_image('https://vimeo.com/19339941', { image: 'thumbnail_small' }).then((image) => {
         expect(image.link).toEqual('https://i.vimeocdn.com/video/122513613_100x75.jpg');
@@ -153,7 +153,7 @@ describe('EmbedVideoService', () => {
     })));
 
   it('gets default vimeo thumbnail with invalid options',
-    async(inject([EmbedVideoService], (embedVideoService) => {
+    waitForAsync(inject([EmbedVideoService], (embedVideoService) => {
 
       embedVideoService.embed_image('https://vimeo.com/19339941', { image: 'stupid-format' }).then((image) => {
         expect(image.link).toEqual('https://i.vimeocdn.com/video/122513613_640.jpg');
@@ -162,7 +162,7 @@ describe('EmbedVideoService', () => {
     })));
 
   it('gets youtube thumbnail (prove backwards compatibility)',
-    async(inject([EmbedVideoService], (embedVideoService) => {
+    waitForAsync(inject([EmbedVideoService], (embedVideoService) => {
 
       embedVideoService.embed_image('https://youtu.be/ZeLnjXTNq6Q', { image: 'maxresdefault' }).then((image) => {
         expect(image.link).toEqual('https://img.youtube.com/vi/ZeLnjXTNq6Q/maxresdefault.jpg');
@@ -171,7 +171,7 @@ describe('EmbedVideoService', () => {
     })));
 
   it('gets dailymotion thumbnail',
-    async(inject([EmbedVideoService], (embedVideoService) => {
+    waitForAsync(inject([EmbedVideoService], (embedVideoService) => {
 
       embedVideoService.embed_image('https://www.dailymotion.com/video/x20qnej_red-bull-presents-wild-ride-bmx-mtb-dirt_sport').then((image) => {
         expect(image.link).toEqual('http://s1.dmcdn.net/IgPVQ/x480-ktj.jpg');
@@ -180,7 +180,7 @@ describe('EmbedVideoService', () => {
     })));
 
   it('gets dailymotion thumbnail with options',
-    async(inject([EmbedVideoService], (embedVideoService) => {
+    waitForAsync(inject([EmbedVideoService], (embedVideoService) => {
 
       embedVideoService.embed_image('https://www.dailymotion.com/video/x20qnej_red-bull-presents-wild-ride-bmx-mtb-dirt_sport', { image: 'thumbnail_720_url' }).then((image) => {
         expect(image.link).toEqual('http://s1.dmcdn.net/IgPVQ/x720-d_h.jpg');
@@ -189,7 +189,7 @@ describe('EmbedVideoService', () => {
     })));
 
   it('gets dailymotion thumbnail (dai.ly)',
-    async(inject([EmbedVideoService], (embedVideoService) => {
+    waitForAsync(inject([EmbedVideoService], (embedVideoService) => {
 
       embedVideoService.embed_image('http://dai.ly/x20qnej').then((image) => {
         expect(image.link).toEqual('http://s1.dmcdn.net/IgPVQ/x480-ktj.jpg');
