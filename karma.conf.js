@@ -1,20 +1,21 @@
 // Karma configuration for Unit testing
+const path = require('path');
 
-module.exports = function (config) {
-  var configuration = {
+module.exports = (config) => {
+  config.set({
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '',
+    entry: () => './src',
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['jasmine'],
 
     plugins: [
-      require('karma-jasmine'),
-      require('karma-chrome-launcher'),
-      require('karma-webpack'),
-      require('karma-sourcemap-loader'),
-      require('karma-spec-reporter')
+      'karma-jasmine',
+      'karma-chrome-launcher',
+      'karma-webpack',
+      'karma-sourcemap-loader',
+      'karma-spec-reporter',
     ],
 
     // list of files / patterns to load in the browser
@@ -33,22 +34,20 @@ module.exports = function (config) {
     },
 
     // webpack
-    webpack: {
-      resolve: {
-        extensions: ['.ts', '.js']
-      },
-      module: {
-        rules: [
-          {
-            test: /\.ts/,
-            loaders: ['ts-loader'],
-            exclude: /node_modules/
-          }
-        ],
-        exprContextCritical: false
-      },
-      performance: { hints: false }
+    resolve: {
+      extensions: ['.ts']
     },
+    module: {
+      rules: [
+        {
+          test: /\.ts/,
+          loaders: ['ts-loader'],
+          exclude: /node_modules/
+        }
+      ],
+      exprContextCritical: false
+    },
+    performance: { hints: false },
 
     webpackServer: {
       noInfo: true
@@ -86,6 +85,5 @@ module.exports = function (config) {
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
     singleRun: true
-  };
-  config.set(configuration);
+  });
 }
