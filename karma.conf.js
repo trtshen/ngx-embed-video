@@ -9,25 +9,28 @@ module.exports = function (config) {
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
-      require('karma-coverage-istanbul-reporter'),
+      require('karma-coverage'),
       require('@angular-devkit/build-angular/plugins/karma')
     ],
-    files: [
-      { pattern: 'tests/**.spec.ts', watched: false }
-    ],
     client: {
+      jasmine: {
+        // you can add configuration options for Jasmine here
+        // the possible options are listed at https://jasmine.github.io/api/edge/Configuration.html
+        // for example, you can disable the random execution with `random: false`
+        // or set a specific seed with `seed: 4321`
+      },
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
-    coverageIstanbulReporter: {
-      dir: require('path').join(__dirname, '../coverage'),
-      reports: ['html', 'lcovonly'],
-      fixWebpackSourcePaths: true,
-      thresholds: {
-        statements: 80,
-        lines: 80,
-        branches: 70,
-        functions: 80
-      }
+    jasmineHtmlReporter: {
+      suppressAll: true // removes the duplicated traces
+    },
+    coverageReporter: {
+      dir: require('path').join(__dirname, '../../coverage/ngx-embed-video'),
+      subdir: '.',
+      reporters: [
+        { type: 'html' },
+        { type: 'text-summary' }
+      ]
     },
     reporters: ['progress', 'kjhtml'],
     port: 9876,
@@ -36,5 +39,6 @@ module.exports = function (config) {
     autoWatch: true,
     browsers: ['Chrome'],
     singleRun: false,
+    restartOnFileChange: true
   });
 };
