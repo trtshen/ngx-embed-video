@@ -1,16 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { map } from 'rxjs/operators';
 
-interface EmbedOption {
-  query ?: string[];
-  attr ?: {
-    [key: string]: string;
-  }
-}
-
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class EmbedVideoService {
   private validYouTubeOptions = [
     'default',
@@ -41,7 +36,7 @@ export class EmbedVideoService {
   ) {
   }
 
-  public embed(url: any, options?: any): string {
+  public embed(url: any, options?: any): SafeHtml | void {
     let id: string;
     url = new URL(url);
     id = this.detectYoutube(url);
@@ -59,34 +54,31 @@ export class EmbedVideoService {
       return this.embed_dailymotion(id, options);
     }
 
-    return null;
+    return;
   }
 
-  public embed_youtube(id: string, options?: EmbedOption): string {
+  public embed_youtube(id: string, options?: any): SafeHtml {
     options = this.parseOptions(options);
 
-    return this.sanitize_iframe('<iframe src="https://www.youtube.com/embed/'
-      + id + options.query + '"' + options.attr
-      + ' frameborder="0" allowfullscreen></iframe>');
+    return this.sanitize_iframe(`<iframe src="https://www.youtube.com/embed/${id}${options.query}"${options.attr} frameborder="0" allowfullscreen></iframe>`);
   }
 
-  public embed_vimeo(id: string, options?: EmbedOption): string {
+  public embed_vimeo(id: string, options?: any): SafeHtml {
     options = this.parseOptions(options);
 
-    return this.sanitize_iframe('<iframe src="https://player.vimeo.com/video/'
-      + id + options.query + '"' + options.attr
-      + ' frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>');
+    return this.sanitize_iframe(`<iframe src="https://player.vimeo.com/video/${id}${options.query}"${options.attr} frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>`);
   }
 
-  public embed_dailymotion(id: string, options?: EmbedOption): string {
+  public embed_dailymotion(id: string, options?: any): SafeHtml {
     options = this.parseOptions(options);
 
-    return this.sanitize_iframe('<iframe src="https://www.dailymotion.com/embed/video/'
-      + id + options.query + '"' + options.attr
-      + ' frameborder="0" allowfullscreen></iframe>');
+    return this.sanitize_iframe(`<iframe src="https://www.dailymotion.com/embed/video/${id}${options.query}"${options.attr} frameborder="0" allowfullscreen></iframe>`);
   }
 
-  public embed_image(url: any, options?: EmbedOption): any {
+  public embed_image(url: any, options?: any): Promise<{
+    link: string;
+    html: string;
+  }> {
     let id: string;
 
     url = new URL(url);
@@ -104,9 +96,11 @@ export class EmbedVideoService {
     if (id) {
       return this.embed_dailymotion_image(id, options);
     }
+
+    throw 'No id provided.';
   }
 
-  private embed_youtube_image(id: string, options?: any): any {
+  private embed_youtube_image(id: string, options?: any): Promise<any> {
     if (typeof options === 'function') {
       options = {};
     }
@@ -126,7 +120,7 @@ export class EmbedVideoService {
     });
   }
 
-  private embed_vimeo_image(id: string, options?: any): any {
+  private embed_vimeo_image(id: string, options?: any): Promise<any> {
     if (typeof options === 'function') {
       options = {};
     }
@@ -147,7 +141,7 @@ export class EmbedVideoService {
       .catch(error => console.log(error));
   }
 
-  private embed_dailymotion_image(id: string, options?: any): any {
+  private embed_dailymotion_image(id: string, options?: any): Promise<any> {
     if (typeof options === 'function') {
       options = {};
     }
@@ -167,7 +161,7 @@ export class EmbedVideoService {
       .catch(error => console.log(error));
   }
 
-  private parseOptions(options: EmbedOption): any {
+  private parseOptions(options: any): any {
     let queryString = '',
       attributes = '';
 
@@ -202,7 +196,7 @@ export class EmbedVideoService {
     return queryString.join('&');
   }
 
-  private sanitize_iframe(iframe: string): any {
+  private sanitize_iframe(iframe: string): SafeHtml {
     return this.sanitizer.bypassSecurityTrustHtml(iframe);
   }
 

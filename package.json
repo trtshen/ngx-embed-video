@@ -1,33 +1,21 @@
 {
   "name": "ngx-embed-video",
-  "version": "1.0.4",
-  "scripts": {
-    "build": "ngc -p tsconfig.json",
-    "lint": "tslint --force --project tsconfig.json src/*.ts",
-    "prepublish": "tsc",
-    "tsc": "tsc",
-    "test": "karma start"
-  },
+  "version": "2.0.0",
   "files": [
     "dist"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/SamirHodzic/ngx-embed-video"
-  },
-  "author": {
-    "name": "SamirHodzic",
-    "email": "samir.sgd@gmail.com"
+    "url": "https://github.com/trtshen/ngx-embed-video"
   },
   "keywords": [
     "typescript",
     "angular",
-    "angular6",
-    "ng6",
+    "angular12",
+    "ng12",
     "ngx",
     "embed-video",
     "embed",
-    "typescript",
     "youtube",
     "vimeo",
     "dailymotion",
@@ -35,41 +23,13 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/SamirHodzic/ngx-embed-video/issues"
+    "url": "https://github.com/trtshen/ngx-embed-video/issues"
   },
-  "main": "./dist/index.js",
-  "devDependencies": {
-    "@angular-devkit/build-angular": "^12.0.0",
-    "@angular/common": "^12.0.0",
-    "@angular/compiler": "^12.0.0",
-    "@angular/compiler-cli": "^12.0.0",
-    "@angular/core": "^12.0.0",
-    "@angular/platform-browser": "^12.0.0",
-    "@angular/platform-browser-dynamic": "^12.0.0",
-    "@angular/platform-server": "^12.0.0",
-    "@types/jasmine": "^3.10.3",
-    "codelyzer": "^6.0.2",
-    "core-js": "^3.20.2",
-    "jasmine-core": "^4.0.0",
-    "karma": "~6.3.10",
-    "karma-chrome-launcher": "~3.1.0",
-    "karma-coverage-istanbul-reporter": "^3.0.3",
-    "karma-jasmine": "~4.0.1",
-    "karma-jasmine-html-reporter": "^1.7.0",
-    "karma-sourcemap-loader": "^0.3.8",
-    "karma-spec-reporter": "^0.0.32",
-    "rxjs": "^7.5.1",
-    "rxjs-compat": "^6.6.7",
-    "ts-helpers": "^1.1.2",
-    "ts-loader": "^9.2.6",
-    "tslint": "^6.1.3",
-    "typescript": "^4.2.3",
-    "zone.js": "~0.11.4"
-  },
-  "engines": {
-    "node": ">=0.8.0"
+  "peerDependencies": {
+    "@angular/common": "^12.2.0",
+    "@angular/core": "^12.2.0"
   },
   "dependencies": {
-    "rxjs-tslint": "^0.1.8"
+    "tslib": "^2.3.0"
   }
 }
